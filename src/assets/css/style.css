@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap');
+
+:root {
+    --background-light: #E0E0E0;
+    --background-dark: #333;
+    --text-light: #333;
+    --text-dark: #EEE;
+    --button: #CCC;
+    --button-hover: #DDD;
+
+    --ui-main: #E0E0E0;
+    /* --ui-main-hover: #DDD; */
+    --light-gray: #CCC;
+    --gray: #AAA;
+}
+
+[data-dark-mode] {
+    --background-light: #151515;
+    --background-dark: #DDD;
+    --text-light: #AAA;
+    --text-dark: #333;
+    --button: #333;
+    --button-hover: #444;
+}
+
+img.svg {
+    filter: invert(0.1);
+}
+
+[data-dark-mode] .svg {
+    filter: invert(0.6);
+}
+
+[data-dark-mode] img {
+    filter: brightness(0.7);
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--background-light);
+    color: var(--text-light);
+    overflow: hidden;
+    height: 100%;
+}
+
+html {
+    height: 100%;
+    scroll-behavior: smooth;
+}
+
+#wrap {
+    display: grid;
+    gap: 2rem;
+    grid-template:
+        "header" 4rem
+        "content" auto / 1fr;
+    min-height: 100vh;
+    height: 100%;
+}
+
+.content-wrapper {
+    display: flex;
+    justify-self: center;
+    justify-content: space-between;
+}
+
+.noscroll {
+    overflow-y: hidden;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.neu {
+    box-shadow: 2px 2px 6px #BCBCBC, -2px -2px 6px #FFFFFF;
+}
+.neu.interactive:active {
+    box-shadow: inset 1.8px 1.8px 3px #C6C6C6, inset -1.8px -1.8px 3px #FAFAFA !important;
+}
+
+.card {
+    background-color: var(--background-light);
+    box-shadow: 1.5px 1.5px 5px #BCBCBC, -1.5px -1.5px 5px #FFFFFF;
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    height: fit-content;
+}
+.inset {
+    box-shadow: inset 1.8px 1.8px 3px #C6C6C6, inset -1.8px -1.8px 3px #FAFAFA !important;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.link {
+    cursor: pointer;
+    position: relative;
+    text-decoration: none;
+    color: var(--text-light);
+    transition: color 150ms;
+}
+
+.link::after {
+    content: "";
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    width: 1rem;
+    height: 2px;
+    background-color: var(--text-light);
+    border-radius: 2px;
+    transition: 200ms;
+}
+
+.link:hover::after {
+    width: 100%;
+}
+
+.contacts-img {
+    cursor: pointer;
+}
+
+::-webkit-scrollbar {
+    width: 0.7rem;
+}
+
+::-webkit-scrollbar-track {
+    background: #DDD;
+}
+
+[data-dark-mode] ::-webkit-scrollbar-track {
+    background: #222;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}
+
+
+::selection {
+    background-color: #00000022;
+}
+
+[data-dark-mode] ::selection {
+    background: #FFFFFF22;
+}
+
+.no-select {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.15s ease-in-out;
+
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+@media (max-width: 767px) {
+    .content-wrapper {
+        width: 90%;
+    }
+}
+
+@media (min-width: 768px) {
+    .content-wrapper {
+        width: 80%;
+    }
+}
+
+@media (min-width: 1440px) {
+    .content-wrapper {
+        width: 70%;
+    }
+}
