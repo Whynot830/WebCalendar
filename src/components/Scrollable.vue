@@ -1,7 +1,7 @@
 <template>
   <div class="carousel-wrap">
-    <vue-button class="no-margin" v-if="isCarousel" @click="scrollUp" >
-      <chevron-ico class="no-select" :size="32" :rotationDegree="90"/>
+    <vue-button class="no-margin" v-if="isCarousel" @click="scrollUp">
+      <chevron-ico class="no-select" :size="32" :rotationDegree="90" />
     </vue-button>
     <div class="list-wrap">
       <div :style="`height: ${listHeight}px; gap: ${listGap}px;`" :class="{ 'scrollbar-visible': !isCarousel }"
@@ -47,9 +47,7 @@ export default {
   },
   methods: {
     scrollDown() {
-      this.currentBlock = Math.floor(
-        this.list.scrollTop / this.stepHeight
-      ) + this.scrollStep
+      this.currentBlock = Math.round(this.list.scrollTop / this.stepHeight) + this.scrollStep
 
       this.list.scrollTo({
         top: this.currentBlock * this.stepHeight,
@@ -58,10 +56,9 @@ export default {
     },
     scrollUp() {
       this.currentBlock = Math.max(
-        Math.floor(this.list.scrollTop / this.stepHeight) -
-        this.scrollStep,
-        0
+        Math.round(this.list.scrollTop / this.stepHeight) - this.scrollStep, 0
       )
+
       this.list.scrollTo({
         top: this.currentBlock * this.stepHeight,
         behavior: 'smooth'
@@ -127,5 +124,6 @@ export default {
 
 ::-webkit-scrollbar-track {
   background: transparent;
-}</style>
+}
+</style>
   

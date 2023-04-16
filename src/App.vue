@@ -7,15 +7,15 @@
       </vue-scrollable>
       
 
-    </div>
+    </div> -->
     
     <div class="card">
-      <vue-scrollable :isCarousel="true" :listGap="24" :blocksVisible="4" :scrollStep="1">
+      <vue-scrollable :isCarousel="true" :listGap="24" :blocksVisible="3" :scrollStep="2">
         <div class="card cards" v-for="_ in 15" :key="_" style="">{{ _ }}</div>
       </vue-scrollable>
-    </div> -->
-    <vue-calendar></vue-calendar>
-    <!-- <login-form/> -->
+    </div>
+    <!-- <vue-calendar></vue-calendar>
+    <login-form/> -->
 
   </main>
 </template>
