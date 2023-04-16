@@ -6,15 +6,16 @@
         <div v-for="i in 15" class="card" :key="i">{{ i }}</div>
       </vue-scrollable>
       
+
     </div>
-    <vue-calendar></vue-calendar>
+    
     <div class="card">
-      <vue-scrollable :isCarousel="true" :listGap="16" :blocksVisible="4" :scrollStep="1">
+      <vue-scrollable :isCarousel="true" :listGap="24" :blocksVisible="4" :scrollStep="1">
         <div class="card cards" v-for="_ in 15" :key="_" style="">{{ _ }}</div>
       </vue-scrollable>
     </div> -->
-
-    <vue-login></vue-login>
+    <vue-calendar></vue-calendar>
+    <!-- <login-form/> -->
 
   </main>
 </template>
@@ -27,7 +28,7 @@ export default {
     }
   },
   methods: {
-    
+
   }
 }
 </script>
@@ -36,6 +37,4 @@ export default {
 .cards {
   width: 10rem;
 }
-
-
 </style>

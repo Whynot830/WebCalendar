@@ -50,7 +50,6 @@ export default {
       this.currentBlock = Math.floor(
         this.list.scrollTop / this.stepHeight
       ) + this.scrollStep
-      console.log(this.currentBlock);
 
       this.list.scrollTo({
         top: this.currentBlock * this.stepHeight,

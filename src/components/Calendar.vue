@@ -5,7 +5,7 @@
                 <chevron-ico class="no-select" />
             </vue-button>
 
-            <span class="date-label">{{ `${currMonth + 1}/${currDay}/${currYear}` }}</span>
+            <span class="date-label">{{ `${currMonth + 1}/${currDate}/${currYear}` }}</span>
 
             <vue-button class="calendar-button" @click="openCalendar">
                 <calendar-ico />
@@ -32,7 +32,7 @@
                         <chevron-ico :rotationDegree=180 />
                     </vue-button>
 
-                    <vue-button class="calendar-button" @click="deselectDate">
+                    <vue-button class="calendar-button" @click="closeCalendar">
                         <close-ico class="calendar-close" />
                     </vue-button>
                 </div>
@@ -42,12 +42,12 @@
                 </div>
                 <div class="dates">
                     <div class="date-wrap flex-center" v-for="(date, index) in dates" :key="index">
-                        <div class="date flex-center neu" :class="{
-                            // 'curr-date': isCurrDate(currYear, currMonth, date),
-                            'inset': isPickedDate(currYear, currMonth, date)
-                        }">
+                        <vue-button class="date flex-center" :class="{
+                            'picked': isPickedDate(currYear, currMonth, date),
+                            'disabled': !date
+                        }" @click="setDate(currYear, currMonth, date)">
                             <span class="bold">{{ date }}</span>
-                        </div>
+                        </vue-button>
                     </div>
                 </div>
             </div>
@@ -71,11 +71,12 @@ export default {
                 'Fri', 'Sat', 'Sun'
             ],
             date: new Date(),
+            pickedDate: null,
             calendarVisible: false,
         }
     },
     computed: {
-        currDay() {
+        currDate() {
             return this.date.getDate()
         },
         currMonth() {
@@ -93,19 +94,27 @@ export default {
             const offset = this.getOffset(this.currYear, this.currMonth)
             for (let i = 1; i <= offset; i++)
                 dates.push('')
-            for (let i = 1; i <= new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).getDate(); i++)
+            const datesAmount = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).getDate()
+            for (let i = 1; i <= datesAmount; i++)
                 dates.push(i)
+            const remainingDays = (offset + datesAmount) % 7
+            for (let i = 0; i < (remainingDays > 0 ? (7 - remainingDays) : 0); i++)
+                dates.push('')
             return dates
         }
     },
     methods: {
         openCalendar() {
+            this.pickedDate = new Date(this.date)
             this.calendarVisible = true
         },
         closeCalendar() {
+            if (!this.isPickedDate(this.currYear, this.currMonth, this.currDate))
+                this.date = new Date(this.pickedDate)
             this.calendarVisible = false
         },
         gotoPresentDate() {
+            this.pickedDate = new Date()
             this.date = new Date()
         },
         prevDay() {
@@ -123,18 +132,13 @@ export default {
         getOffset(year, month) {
             return (new Date(year, month, 1).getDay() + 6) % 7
         },
-        // isCurrDate(year, month, date) {
-        //     const currDate = new Date()
-        //     return currDate.getFullYear() == year
-        //         && currDate.getMonth() == month
-        //         && currDate.getDate() == date
-        // },
         isPickedDate(year, month, date) {
-            return this.date.getFullYear() == year
-                && this.date.getMonth() == month
-                && this.date.getDate() == date
+            return this.pickedDate.getFullYear() == year
+                && this.pickedDate.getMonth() == month
+                && this.pickedDate.getDate() == date
         },
-        deselectDate() {
+        setDate(year, month, date) {
+            this.pickedDate = new Date(year, month, date)
             this.closeCalendar()
         }
     }
@@ -160,7 +164,7 @@ export default {
 
 .calendar-wrap {
     position: absolute;
-    top: -150%;
+    top: 0;
     background-color: var(--background-light);
     box-shadow: 0 0 15px -10px black;
     border-radius: 1.5rem;
@@ -219,11 +223,21 @@ export default {
 
 .date {
     position: absolute;
-    width: 75%;
-    height: 75%;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 75% !important;
+    height: 75% !important;
     border-radius: 50%;
     background-color: var(--ui-main);
     /* box-shadow: 1.8px 1.8px 7px #BCBCBC, -1.8px -1.8px 7px #FFFFFF; */
+}
+
+.date.picked {
+    border: solid 2px #00000055
+}
+
+.date.disabled {
+    pointer-events: none;
 }
 
 /* .date:hover {

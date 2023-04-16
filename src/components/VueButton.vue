@@ -1,5 +1,5 @@
 <template>
-    <button class="button neu interactive" tabindex="0">
+    <button class="button neu" tabindex="0">
         <slot></slot>
     </button>
 </template>
@@ -29,6 +29,7 @@ export default {
     box-shadow: 2.4px 2.4px 7px #9E9E9E, -2.4px -2.4px 7px #FFFFFF;
 }
 .button:active {
+    box-shadow: inset 1.8px 1.8px 3px #C6C6C6, inset -1.8px -1.8px 3px #FAFAFA;
     transform: translate(1px);
 }
 </style>

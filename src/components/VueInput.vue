@@ -1,7 +1,7 @@
 <template>
-    <textarea v-if="textArea" class="input neu interactive" />
+    <textarea v-if="textArea" class="input neu" />
 
-    <input v-else class="input neu interactive" :value="modelValue" @input="updateValue" type="text">
+    <input v-else class="input neu" :value="modelValue" @input="updateValue" type="text">
 </template>
 
 <script>
@@ -45,10 +45,9 @@ textarea.input {
     height: 7.5rem;
     max-height: 15rem;
 }
+
 .input:focus {
     box-shadow: inset 1.8px 1.8px 3px #C6C6C6, inset -1.8px -1.8px 3px #FAFAFA;
-}
-.input:focus {
     padding-left: 1.05rem;
     transform: translate(1px)
 }
