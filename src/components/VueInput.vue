@@ -48,4 +48,9 @@ textarea.input {
 .input:focus {
     box-shadow: inset 1.8px 1.8px 3px #C6C6C6, inset -1.8px -1.8px 3px #FAFAFA;
 }
+.input:focus {
+    padding-left: 1.05rem;
+    transform: translate(1px)
+}
+
 </style>

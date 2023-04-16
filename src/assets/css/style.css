@@ -75,6 +75,10 @@ html {
     overflow-y: hidden;
 }
 
+.no-margin {
+    margin: 0 !important;
+}
+
 .flex-center {
     display: flex;
     align-items: center;

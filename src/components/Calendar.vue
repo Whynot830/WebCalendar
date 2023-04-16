@@ -7,8 +7,8 @@
 
             <span class="date-label">{{ `${currMonth + 1}/${currDay}/${currYear}` }}</span>
 
-            <vue-button class="flex-center calendar-button" @click="openCalendar">
-                <calendar-ico/>
+            <vue-button class="calendar-button" @click="openCalendar">
+                <calendar-ico />
             </vue-button>
 
             <vue-button class="flex-center calendar-button" @click="nextDay">
@@ -153,9 +153,11 @@ export default {
     align-items: center;
     padding: 1.5rem 4rem;
 }
+
 .neu {
     background-color: #222;
 }
+
 .calendar-wrap {
     position: absolute;
     top: -150%;

@@ -25,15 +25,10 @@ export default {
     padding: 1rem;
     border-radius: 3rem;
 }
-.button:active {
-    transform: translate(0.5px);
-
-}
 .button:focus-visible {
     box-shadow: 2.4px 2.4px 7px #9E9E9E, -2.4px -2.4px 7px #FFFFFF;
 }
-.butthon:focus-visible:active {
-    box-shadow: inset 1.8px 1.8px 3px #C6C6C6, inset -1.8px -1.8px 3px #FAFAFA;
-
+.button:active {
+    transform: translate(1px);
 }
 </style>

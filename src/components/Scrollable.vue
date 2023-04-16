@@ -1,12 +1,17 @@
 <template>
   <div class="carousel-wrap">
-    <chevron-ico class="no-select" v-if="isCarousel" :size="64" :rotationDegree="90" @click="scrollUp"></chevron-ico>
+    <vue-button class="no-margin" v-if="isCarousel" @click="scrollUp" >
+      <chevron-ico class="no-select" :size="32" :rotationDegree="90"/>
+    </vue-button>
     <div class="list-wrap">
-      <div :style="`height: ${listHeight}px; gap: ${listGap}px;`" :class="{'scrollbar-visible': !isCarousel}" class="list card inset" ref="list" id="list">
+      <div :style="`height: ${listHeight}px; gap: ${listGap}px;`" :class="{ 'scrollbar-visible': !isCarousel }"
+        class="list card inset" ref="list" id="list">
         <slot></slot>
       </div>
     </div>
-    <chevron-ico class="no-select" v-if="isCarousel" :size="64" :rotationDegree="270" @click="scrollDown"></chevron-ico>
+    <vue-button class="no-margin" v-if="isCarousel" @click="scrollDown">
+      <chevron-ico class="no-select" :size="32" :rotationDegree="270" />
+    </vue-button>
   </div>
 </template>
   
@@ -81,10 +86,10 @@ export default {
       const computedStyle = getComputedStyle(firstChild)
       const marginTop = parseInt(computedStyle.marginTop)
       const marginBottom = parseInt(computedStyle.marginBottom)
-      
+
       this.paddingTop = parseInt(getComputedStyle(this.list).paddingTop)
       this.blockHeight = firstChild.offsetHeight + marginTop + marginBottom
-      this.stepHeight = this.blockHeight + this.listGap 
+      this.stepHeight = this.blockHeight + this.listGap
     }
   }
 }
@@ -103,21 +108,25 @@ export default {
   display: flex;
   flex-flow: column;
 }
+
 .list-wrap {
   padding: 1rem 0;
 }
+
 .scrollbar-visible {
   overflow-y: auto;
   padding: 1.5rem 0.8rem 1.5rem 1.5rem;
 }
+
 ::-webkit-scrollbar-button:start:increment {
-    height: 10%;
+  height: 10%;
 }
+
 ::-webkit-scrollbar-button:end:increment {
-    height: 10%;
+  height: 10%;
 }
+
 ::-webkit-scrollbar-track {
-    background: transparent;
-}
-</style>
+  background: transparent;
+}</style>
   

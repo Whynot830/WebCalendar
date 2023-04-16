@@ -1,6 +1,9 @@
 <template>
     <header class="header no-select">
-        <vue-input></vue-input>
+        <div class="flex-center search-wrap">
+            <vue-input class="search-bar"/>
+            <search-ico class="search-ico"/>
+        </div>
         <div class="buttons">
             <vue-button></vue-button>
             <vue-button></vue-button>
@@ -28,6 +31,17 @@ export default {
     background-color: var(--background-light);
     box-shadow: 0 0 15px -10px black;
     padding: 1rem;
+}
+.search-wrap {
+    position: relative;
+}
+.search-bar {
+    padding-right: 3.5rem !important;
+}
+.search-ico {
+    pointer-events: none;
+    position: absolute;
+    right: 1rem;
 }
 .logo {
     width: 2.7rem;
