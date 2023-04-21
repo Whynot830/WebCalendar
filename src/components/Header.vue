@@ -35,8 +35,14 @@ export default {
 .search-wrap {
     position: relative;
 }
+.search-wrap:has(.search-bar.inset, .search-bar:focus) {
+    transform: translate(1px);
+}
 .search-bar {
     padding-right: 3.5rem !important;
+}
+.search-bar {
+    transform: unset !important;
 }
 .search-ico {
     pointer-events: none;

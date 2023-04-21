@@ -1,7 +1,7 @@
 <template>
-    <textarea v-if="textArea" class="input neu" />
+    <textarea v-if="textArea" class="input neu" :value="modelValue" @input="updateValue"  @focusout="checkEmptiness" />
 
-    <input v-else class="input neu" :value="modelValue" @input="updateValue" type="text">
+    <input v-else class="input neu" :value="modelValue" @input="updateValue" type="text" @focusout="checkEmptiness">
 </template>
 
 <script>
@@ -16,8 +16,14 @@ export default {
         }
     },
     methods: {
-        updateValue(event) {
+        updateValue(event) { 
             this.$emit('update:modelValue', event.target.value)
+        },
+        checkEmptiness(event) {
+            if (event.target.value)
+                event.target.classList.add('inset')
+            else
+                event.target.classList.remove('inset')
         }
     }
 }
@@ -48,8 +54,10 @@ textarea.input {
 
 .input:focus {
     box-shadow: inset 1.8px 1.8px 3px #C6C6C6, inset -1.8px -1.8px 3px #FAFAFA;
-    padding-left: 1.05rem;
     transform: translate(1px)
 }
-
+.inset {
+    box-shadow: inset 1.8px 1.8px 3px #C6C6C6, inset -1.8px -1.8px 3px #FAFAFA;
+    transform: translate(1px)
+}
 </style>

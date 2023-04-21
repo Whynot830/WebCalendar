@@ -1,5 +1,5 @@
 <template>
-    <button class="button neu" tabindex="0">
+    <button type="button" class="button neu" tabindex="0">
         <slot></slot>
     </button>
 </template>

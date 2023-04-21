@@ -1,22 +1,22 @@
 <template>
     <div class="calendar-container">
-        <div class="card date-container inset">
+        <div class="date-container">
             <vue-button class="flex-center calendar-button" @click="prevDay">
                 <chevron-ico class="no-select" />
             </vue-button>
 
-            <span class="date-label">{{ `${currMonth + 1}/${currDate}/${currYear}` }}</span>
-
-            <vue-button class="calendar-button" @click="openCalendar">
-                <calendar-ico />
-            </vue-button>
+            <span class="bold date-label">{{ `${currMonth + 1}/${currDay}/${currYear}` }}</span>
 
             <vue-button class="flex-center calendar-button" @click="nextDay">
                 <chevron-ico :rotationDegree=180 />
             </vue-button>
+
+            <vue-button class="calendar-button" @click="openCalendar">
+                <calendar-ico />
+            </vue-button>
         </div>
         <transition name="fade">
-            <div v-if="calendarVisible" class="calendar-wrap no-select">
+            <div v-if="calendarVisible" class="calendar-wrap no-select card">
                 <div class="header">
                     <vue-button class="calendar-button" @click="gotoPresentDate">
                         <home-ico class="home-ico" />
@@ -58,6 +58,12 @@
 <script>
 export default {
     name: 'vueCalendar',
+    props: {
+        date: {
+            type: Date,
+            required: true
+        }
+    },
     data() {
         return {
             months: [
@@ -70,31 +76,30 @@ export default {
                 'Mon', 'Tue', 'Wed', 'Thu',
                 'Fri', 'Sat', 'Sun'
             ],
-            date: new Date(),
-            pickedDate: null,
+            currDate: null,
             calendarVisible: false,
         }
     },
     computed: {
-        currDate() {
-            return this.date.getDate()
+        currDay() {
+            return this.currDate.getDate()
         },
         currMonth() {
-            return this.date.getMonth()
+            return this.currDate.getMonth()
         },
         currYear() {
-            return this.date.getFullYear()
+            return this.currDate.getFullYear()
         },
         monthName() {
-            return this.months[this.date.getMonth()]
-
+            return this.months[this.currDate.getMonth()]
         },
         dates() {
             const dates = []
             const offset = this.getOffset(this.currYear, this.currMonth)
             for (let i = 1; i <= offset; i++)
                 dates.push('')
-            const datesAmount = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).getDate()
+            const datesAmount = new Date(this.currYear, this.currMonth + 1, 0).getDate()
+            console.log(new Date(this.currYear, this.currMonth + 1, 0));
             for (let i = 1; i <= datesAmount; i++)
                 dates.push(i)
             const remainingDays = (offset + datesAmount) % 7
@@ -105,42 +110,45 @@ export default {
     },
     methods: {
         openCalendar() {
-            this.pickedDate = new Date(this.date)
             this.calendarVisible = true
         },
-        closeCalendar() {
-            if (!this.isPickedDate(this.currYear, this.currMonth, this.currDate))
-                this.date = new Date(this.pickedDate)
+        closeCalendar() {    
             this.calendarVisible = false
         },
         gotoPresentDate() {
-            this.pickedDate = new Date()
-            this.date = new Date()
+            this.currDate = new Date()
+            this.$emit('changeDate', this.currDate)
         },
         prevDay() {
-            this.date = new Date(this.date.setDate(this.date.getDate() - 1))
+            this.currDate = new Date(this.currYear, this.currMonth, this.currDay - 1)
+            this.$emit('changeDate', this.currDate)
         },
         nextDay() {
-            this.date = new Date(this.date.setDate(this.date.getDate() + 1))
+            this.currDate = new Date(this.currYear, this.currMonth, this.currDay + 1)
+            this.$emit('changeDate', this.currDate)
         },
         prevMonth() {
-            this.date = new Date(this.date.setMonth(this.date.getMonth() - 1))
+            this.currDate = new Date(this.currYear, this.currMonth - 1, this.currDay + 1)
         },
         nextMonth() {
-            this.date = new Date(this.date.setMonth(this.date.getMonth() + 1))
+            this.currDate = new Date(this.currYear, this.currMonth + 1, this.currDay + 1)
         },
         getOffset(year, month) {
             return (new Date(year, month, 1).getDay() + 6) % 7
         },
         isPickedDate(year, month, date) {
-            return this.pickedDate.getFullYear() == year
-                && this.pickedDate.getMonth() == month
-                && this.pickedDate.getDate() == date
+            return this.date.getFullYear() == year
+                && this.date.getMonth() == month
+                && this.date.getDate() == date
         },
         setDate(year, month, date) {
-            this.pickedDate = new Date(year, month, date)
+            this.currDate = new Date(year, month, date)
+            this.$emit('changeDate', this.currDate)
             this.closeCalendar()
         }
+    },
+    created() {
+        this.currDate = this.date
     }
 }
 </script>
@@ -148,14 +156,14 @@ export default {
 <style scoped>
 .calendar-container {
     position: relative;
-    width: 25rem;
+    min-width: 25rem;
 }
 
 .date-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 4rem;
+    padding: 1.5rem 2.5rem;
 }
 
 .neu {
@@ -165,9 +173,6 @@ export default {
 .calendar-wrap {
     position: absolute;
     top: 0;
-    background-color: var(--background-light);
-    box-shadow: 0 0 15px -10px black;
-    border-radius: 1.5rem;
     padding: 0.8rem;
     width: 100%;
 }
@@ -187,6 +192,10 @@ export default {
     height: 3rem !important;
 }
 
+.date-label {
+    width: 6rem;
+    text-align: center;
+}
 .chevron {
     cursor: pointer;
     font-size: 1.6rem;

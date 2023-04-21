@@ -1,5 +1,5 @@
 <template>
-    <div class="login-wrap card inset" :class="{ 'sign-up-mode': isSignUp }">
+    <div class="login-wrap card inset no-select" :class="{ 'sign-up-mode': isSignUp }">
         <div class="login-header">
 
             <transition-group name="slide">
@@ -31,8 +31,8 @@
 
             <div class="buttons-wrap" :class="{ 'sign-up-mode': isSignUp }">
                 <transition-group name="slide">
-                    <vue-button class="login-button" v-if="!isSignUp">Sign In</vue-button>
-                    <vue-button class="login-button" v-if="isSignUp">Sign Up</vue-button>
+                    <vue-button type="submit" class="login-button" v-if="!isSignUp">Sign In</vue-button>
+                    <vue-button type="submit" class="login-button" v-if="isSignUp">Sign Up</vue-button>
                 </transition-group>
             </div>
 
