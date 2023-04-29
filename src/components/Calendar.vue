@@ -1,56 +1,60 @@
 <template>
     <div class="calendar-container">
         <div class="date-container">
-            <vue-button class="flex-center calendar-button" @click="prevDay">
+            <vue-button class="calendar-button" @click="prevDay">
                 <chevron-ico class="no-select" />
             </vue-button>
 
-            <span class="bold date-label">{{ `${currMonth + 1}/${currDay}/${currYear}` }}</span>
+            <span class="bold date-label">{{ pickedDate }}</span>
 
-            <vue-button class="flex-center calendar-button" @click="nextDay">
+            <vue-button class="calendar-button" @click="nextDay">
                 <chevron-ico :rotationDegree=180 />
             </vue-button>
 
-            <vue-button class="calendar-button" @click="openCalendar">
+            <vue-button class="calendar-button flex-center" @click="openCalendar">
                 <calendar-ico />
             </vue-button>
         </div>
         <transition name="fade">
-            <div v-if="calendarVisible" class="calendar-wrap no-select card">
-                <div class="header">
-                    <vue-button class="calendar-button" @click="gotoPresentDate">
-                        <home-ico class="home-ico" />
-                    </vue-button>
+            <dialog-window v-model:show="calendarVisible">
+                <div class="calendar-wrap">
+                    <div class="calendar no-select card">
+                        <div class="calendar-header">
+                            <vue-button class="calendar-button" @click="gotoPresentDate">
+                                <home-ico class="home-ico" />
+                            </vue-button>
 
-                    <vue-button class="flex-center calendar-button" @click="prevMonth">
-                        <chevron-ico />
-                    </vue-button>
+                            <vue-button class="calendar-button" @click="prevMonth">
+                                <chevron-ico />
+                            </vue-button>
 
-                    <span class="header-date bold">{{ monthName }} {{ currYear }}</span>
+                            <span class="calendar-header-date bold">{{ monthName }} {{ currYear }}</span>
 
-                    <vue-button class="flex-center calendar-button" @click="nextMonth">
-                        <chevron-ico :rotationDegree=180 />
-                    </vue-button>
+                            <vue-button class="calendar-button" @click="nextMonth">
+                                <chevron-ico :rotationDegree=180 />
+                            </vue-button>
 
-                    <vue-button class="calendar-button" @click="closeCalendar">
-                        <close-ico class="calendar-close" />
-                    </vue-button>
-                </div>
+                            <vue-button class="calendar-button" @click="closeCalendar">
+                                <close-ico class="calendar-close" />
+                            </vue-button>
+                        </div>
 
-                <div class="days">
-                    <span v-for="(day, index) in days" :key="index" class="day bold">{{ day }}</span>
-                </div>
-                <div class="dates">
-                    <div class="date-wrap flex-center" v-for="(date, index) in dates" :key="index">
-                        <vue-button class="date flex-center" :class="{
-                            'picked': isPickedDate(currYear, currMonth, date),
-                            'disabled': !date
-                        }" @click="setDate(currYear, currMonth, date)">
-                            <span class="bold">{{ date }}</span>
-                        </vue-button>
+                        <div class="days">
+                            <span v-for="(day, index) in days" :key="index" class="day bold">{{ day }}</span>
+                        </div>
+                        <div class="dates">
+                            <div class="date-wrap flex-center" v-for="(date, index) in dates" :key="index">
+                                <vue-button class="date flex-center" :class="{
+                                        'picked': isPickedDate(currYear, currMonth, date),
+                                        'disabled': !date
+                                    }" @click="setDate(currYear, currMonth, date)">
+                                    <span class="bold">{{ date }}</span>
+                                </vue-button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </dialog-window>
         </transition>
     </div>
 </template>
@@ -77,10 +81,13 @@ export default {
                 'Fri', 'Sat', 'Sun'
             ],
             currDate: null,
-            calendarVisible: false,
+            calendarVisible: false
         }
     },
     computed: {
+        pickedDate() {
+            return `${this.date.getMonth() + 1}/${this.date.getDate()}/${this.date.getFullYear()}`
+        },
         currDay() {
             return this.currDate.getDate()
         },
@@ -99,7 +106,6 @@ export default {
             for (let i = 1; i <= offset; i++)
                 dates.push('')
             const datesAmount = new Date(this.currYear, this.currMonth + 1, 0).getDate()
-            console.log(new Date(this.currYear, this.currMonth + 1, 0));
             for (let i = 1; i <= datesAmount; i++)
                 dates.push(i)
             const remainingDays = (offset + datesAmount) % 7
@@ -112,7 +118,7 @@ export default {
         openCalendar() {
             this.calendarVisible = true
         },
-        closeCalendar() {    
+        closeCalendar() {
             this.calendarVisible = false
         },
         gotoPresentDate() {
@@ -149,6 +155,16 @@ export default {
     },
     created() {
         this.currDate = this.date
+    },
+    watch: {
+        calendarVisible(newValue) {
+            if (newValue === true)
+                return
+            setTimeout(() => {
+                if (!this.isPickedDate(this.currYear, this.currMonth, this.currDay))
+                    this.currDate = new Date(this.date)
+            }, 200)
+        }
     }
 }
 </script>
@@ -171,13 +187,20 @@ export default {
 }
 
 .calendar-wrap {
-    position: absolute;
-    top: 0;
-    padding: 0.8rem;
-    width: 100%;
+    position: relative;
+    min-width: 25rem;
+    height: 430px;
 }
 
-.header {
+.calendar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0.8rem;
+}
+
+.calendar-header {
     /* padding: 0 2rem; */
     display: flex;
     justify-content: space-between;
@@ -196,13 +219,9 @@ export default {
     width: 6rem;
     text-align: center;
 }
-.chevron {
-    cursor: pointer;
-    font-size: 1.6rem;
-}
 
 
-.header-date {
+.calendar-header-date {
     font-size: 1.1rem;
 }
 

@@ -1,7 +1,7 @@
 <template>
   <div class="carousel-wrap">
-    <vue-button class="no-margin" v-if="isCarousel" @click="scrollUp">
-      <chevron-ico class="no-select" :size="32" :rotationDegree="90" />
+    <vue-button class="scroll-button no-margin no-padding" v-if="isCarousel" @click="scrollUp">
+      <chevron-ico class="no-select" :rotationDegree="90" />
     </vue-button>
     <div class="list-wrap">
       <div :style="`height: ${listHeight}px; gap: ${listGap}px;`" :class="{ 'scrollbar-visible': !isCarousel }"
@@ -9,8 +9,8 @@
         <slot></slot>
       </div>
     </div>
-    <vue-button class="no-margin" v-if="isCarousel" @click="scrollDown">
-      <chevron-ico class="no-select" :size="32" :rotationDegree="270" />
+    <vue-button class="scroll-button no-margin no-padding" v-if="isCarousel" @click="scrollDown">
+      <chevron-ico class="no-select" :rotationDegree="270" />
     </vue-button>
   </div>
 </template>
@@ -98,7 +98,10 @@ export default {
   align-items: center;
   justify-content: center;
 }
-
+.scroll-button {
+  width: 3rem !important;
+  height: 3rem !important;
+}
 .list {
   overflow-y: hidden;
   display: flex;

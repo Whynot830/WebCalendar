@@ -6,7 +6,6 @@ import components from './components'
 const app = createApp(App)
 
 
-
 Object.values(components).forEach(component => {
     app.component(component.name, component)
 })

@@ -1,6 +1,6 @@
 <template>
     <div class="check-container">
-        <input :value="modelValue" @change="toggleCheck" type="checkbox" id="check">
+        <input :value="modelValue" @change="toggleCheck" type="checkbox" ref="check" id="check">
         <div class="checkmark"></div>
     </div>
 </template>
@@ -28,6 +28,7 @@ export default {
     overflow: hidden;
     min-width: 1.2rem;
     min-height: 1.2rem;
+    transition: filter 0.3s 0.1s
 }
 
 #check {
@@ -66,5 +67,10 @@ export default {
 
 #check:checked~.checkmark {
     transform: rotate(45deg) scale(1);
+}
+
+.check-container:has(#check[disabled]) {
+    filter: contrast(0.4);
+    pointer-events: none;
 }
 </style>

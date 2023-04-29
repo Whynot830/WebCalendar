@@ -1,10 +1,10 @@
 <template>
     <header class="header no-select">
         <div class="flex-center search-wrap">
-            <vue-input class="search-bar"/>
-            <search-ico class="search-ico"/>
+            <vue-input class="search-bar" />
+            <search-ico class="search-ico" />
         </div>
-        <div class="buttons">
+        <div class="flex-center">
             <vue-button></vue-button>
             <vue-button></vue-button>
             <vue-button></vue-button>
@@ -32,23 +32,32 @@ export default {
     box-shadow: 0 0 15px -10px black;
     padding: 1rem;
 }
+
 .search-wrap {
     position: relative;
 }
+
 .search-wrap:has(.search-bar.inset, .search-bar:focus) {
     transform: translate(1px);
 }
+
 .search-bar {
     padding-right: 3.5rem !important;
 }
+
 .search-bar {
     transform: unset !important;
 }
+
 .search-ico {
     pointer-events: none;
     position: absolute;
     right: 1rem;
 }
+
+
+
+
 .logo {
     width: 2.7rem;
     height: 2.7rem;
