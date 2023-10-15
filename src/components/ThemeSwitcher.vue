@@ -1,8 +1,8 @@
 <template>
     <div class="switcher" @click="toggle">
       <TransitionGroup name="fade">
-        <img class="switcher-img svg" :key="1" v-if="!isDark" src="@/assets/imgs/sun.svg">
-        <img class="switcher-img svg" v-else :key="2" src="@/assets/imgs/moon.svg">
+        <img class="switcher-img svg" :key="1" v-if="!isDark" src="/js/assets/imgs/sun.svg">
+        <img class="switcher-img svg" v-else :key="2" src="/js/assets/imgs/moon.svg">
       </TransitionGroup>
     </div>
   </template>

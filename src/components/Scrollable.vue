@@ -4,8 +4,8 @@
       <chevron-ico class="no-select" :rotationDegree="90" />
     </vue-button>
     <div class="list-wrap">
-      <div :style="`height: ${listHeight}px; gap: ${listGap}px;`" :class="{ 'scrollbar-visible': !isCarousel }"
-        class="list card inset" ref="list" id="list">
+      <div :style="`height: 400px; gap: ${listGap}px;`" :class="{ 'scrollbar-visible': !isCarousel }"
+           class="list card inset" ref="list" id="list">
         <slot></slot>
       </div>
     </div>
@@ -14,7 +14,7 @@
     </vue-button>
   </div>
 </template>
-  
+
 <script>
 export default {
   name: 'vueScrollable',
@@ -56,7 +56,7 @@ export default {
     },
     scrollUp() {
       this.currentBlock = Math.max(
-        Math.round(this.list.scrollTop / this.stepHeight) - this.scrollStep, 0
+          Math.round(this.list.scrollTop / this.stepHeight) - this.scrollStep, 0
       )
 
       this.list.scrollTo({
@@ -90,7 +90,7 @@ export default {
   }
 }
 </script>
-  
+
 <style scoped>
 .carousel-wrap {
   display: flex;
@@ -103,13 +103,14 @@ export default {
   height: 3rem !important;
 }
 .list {
-  overflow-y: hidden;
+  overflow: hidden;
   display: flex;
   flex-flow: column;
 }
 
 .list-wrap {
   padding: 1rem 0;
+  width: 80%;
 }
 
 .scrollbar-visible {
