@@ -2,14 +2,10 @@ package com.example.webcalendar.controllers;
 
 import com.example.webcalendar.Records.AuthRequest;
 import com.example.webcalendar.Records.AuthResponse;
-import com.example.webcalendar.entities.User;
 import com.example.webcalendar.services.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
